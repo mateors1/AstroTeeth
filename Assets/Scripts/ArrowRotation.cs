@@ -1,8 +1,9 @@
 
-using System;
 using System.Collections;
+using System.Diagnostics;
 using UnityEngine;
 using DG.Tweening;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 public class ArrowRotation : MonoBehaviour
@@ -34,12 +35,14 @@ public class ArrowRotation : MonoBehaviour
 
     void PointToTarget()
     {
+        Debug.Log("The arrow points the right place");
         StartCoroutine(PointNearestTarget());
 
     }
 
     void RandomTarget()
     {
+        Debug.Log("The arrow goes brr");
         Vector3  randomAngle = new Vector3(0,0, Random.Range(0, 1080f));
         StartCoroutine(RotateTheArrow(randomAngle));
     }
@@ -47,7 +50,7 @@ public class ArrowRotation : MonoBehaviour
     IEnumerator RotateTheArrow(Vector3 rotationDirection)
     {
         arrow.SetActive(true);
-        arrow.transform.DORotate(rotationDirection, 1f, RotateMode.FastBeyond360);
+        arrow.transform.DORotate(rotationDirection, rotationDuration, RotateMode.FastBeyond360);
         yield return new WaitForSeconds(timeToDespawn);
         arrow.SetActive(false);
     }
@@ -80,8 +83,12 @@ public class ArrowRotation : MonoBehaviour
             if (nearestTarget != null)
             {
                 Vector3 targetPosition = nearestTarget.position - player.transform.position;
-                Vector3 targetDirection =
-                    new Vector3(0, 0, Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg);
+
+                // Calculate the rotation quaternion using LookRotation
+                Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, targetPosition);
+
+                // Convert the rotation quaternion to Euler angles
+                Vector3 targetDirection = targetRotation.eulerAngles;
                 StartCoroutine(RotateTheArrow(targetDirection));
             }
         }
