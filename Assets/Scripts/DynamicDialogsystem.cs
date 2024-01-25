@@ -5,6 +5,8 @@ using Random = UnityEngine.Random;
 public enum DialogType
 {
     Encouragement,
+    HelpFulAdvice,
+    NewFollower,
     Discouragement,
     Trolling,
     Passerby,
@@ -24,16 +26,22 @@ public class DynamicDialogSystem : MonoBehaviour
     public DialogsObjects encouragementChats;
 
     public DialogsObjects discouragementChats;
-
+    
+    public DialogsObjects helpfullChats;
+    
     public DialogsObjects trollingChats;
     [Header("Dialogs that the passerby will say ")]
     public DialogsObjects passerbyChats;
+
+    public DialogsObjects newFollowerchat;
+    
     [Header("Follower's responses for powerUps")]
     public DialogsObjects powerUpChat1;
 
     public DialogsObjects powerUpChat2;
 
     public DialogsObjects powerUpChat3;
+    
 
 
     void Awake()
@@ -55,6 +63,10 @@ public class DynamicDialogSystem : MonoBehaviour
             case DialogType.Encouragement:
                 selectedOutcome = encouragementChats.dialogs;
                 break;
+            
+            case DialogType.HelpFulAdvice:
+                selectedOutcome = helpfullChats.dialogs;
+                break;
                 
             case DialogType.Discouragement:
                 selectedOutcome = discouragementChats.dialogs;
@@ -66,6 +78,10 @@ public class DynamicDialogSystem : MonoBehaviour
             
             case DialogType.Passerby:
                 selectedOutcome = passerbyChats.dialogs;
+                break;
+            
+            case DialogType.NewFollower:
+                selectedOutcome = newFollowerchat.dialogs;
                 break;
             
             case DialogType.PowerUpChat1:

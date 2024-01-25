@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ChatWindowSystem : MonoBehaviour
 {
@@ -10,11 +12,12 @@ public class ChatWindowSystem : MonoBehaviour
     float delayBetweenRandomTexts;
 
     [SerializeField]
-    [Tooltip("The time that gets shaved from current time each" + 
+    [Tooltip("The time that gets shaved from current time each" +
              " time the player reaches a new follower milestone")]
     float increaseRateBetweenTexts;
 
-    [SerializeField][Tooltip("Truncates how fast can the chat go")]
+    [SerializeField]
+    [Tooltip("Truncates how fast can the chat go")]
     float minTimeBetweenTexts;
 
     [SerializeField]
@@ -45,16 +48,17 @@ public class ChatWindowSystem : MonoBehaviour
             DynamicDialogSystem.instance.GetChatString(DialogType.Discouragement),
             DynamicDialogSystem.instance.GetChatString(DialogType.Trolling)
         };
-        chatbox.text = $"{FormattedUserDialog(standardResponses[Random.Range(0, standardResponses.Length)])}";
+        chatbox.text = FormattedUserDialog(standardResponses[Random.Range(0, standardResponses.Length)]);
         yield return new WaitForSeconds(delayBetweenRandomTexts);
         StartCoroutine(StandardScrollingText(delayBetweenRandomTexts));
 
 
     }
 
-    string FormattedUserDialog(string dialog )
+    string FormattedUserDialog(string dialog)
     {
-        return $"<color=#{UserColor()}>{usernames.usernames[Random.Range(0,usernames.usernames.Length)]}</color>: {dialog} \n {chatbox.text}";
+        return
+            $"<color=#{UserColor()}>{usernames.usernames[Random.Range(0, usernames.usernames.Length)]}</color>: {dialog} \n {chatbox.text}";
     }
 
     string UserColor()
@@ -70,36 +74,57 @@ public class ChatWindowSystem : MonoBehaviour
 
         return new Color(r, g, b);
     }
-    
-  // Reduces the delay between random texts
-  void IncreasingFanbaseInteraction()
-  {
-      if (delayBetweenRandomTexts > minTimeBetweenTexts)
-      {
-          delayBetweenRandomTexts -= increaseRateBetweenTexts;
-      }
-      else
-      {
-          delayBetweenRandomTexts = minTimeBetweenTexts;
-      }
-      
-  }
 
-  void SubscribeToEvents()
-  {
-      CatFollowersSystem.onNewFollowers += IncreasingFanbaseInteraction;
-      CatFollowersSystem.onFollowersHelp += HelpfullText;
+    // Reduces the delay between random texts
+    void IncreasingFanbaseInteraction()
+    {
+        if (delayBetweenRandomTexts > minTimeBetweenTexts)
+        {
+            delayBetweenRandomTexts -= increaseRateBetweenTexts;
+        }
+        else
+        {
+            delayBetweenRandomTexts = minTimeBetweenTexts;
+        }
 
-  }
+    }
 
 
-  void HelpfullText()
-  {
-      chatbox.text = $"{FormattedUserDialog(DynamicDialogSystem.instance.GetChatString(DialogType.Encouragement))} \n {chatbox.text}";
-  }
 
-  void UnsubscribeToEvents()
-  {
-      CatFollowersSystem.onNewFollowers -= IncreasingFanbaseInteraction;
-  }
-}
+    void EventText(DialogType eventResponse)
+    {
+        chatbox.text = FormattedUserDialog(DynamicDialogSystem.instance.GetChatString(DialogType.Encouragement));
+    }
+
+
+
+    void SubscribeToEvents()
+    {
+        CatFollowersSystem.onNewFollowers += IncreasingFanbaseInteraction;
+        CatFollowersSystem.onNewFollowers += () => { EventText(DialogType.NewFollower); };
+        CatFollowersSystem.onFollowersHelp += () => { EventText(DialogType.HelpFulAdvice); };
+        CatFollowerRandomAnswer.onWrongAdvice += () => { EventText(DialogType.Trolling); };
+        CatFollowerRandomAnswer.onInsult += () => { EventText(DialogType.Discouragement); };
+        CatFollowerRandomAnswer.onPowerup1 += () => { EventText(DialogType.PowerUpChat1); };
+        CatFollowerRandomAnswer.onPowerup2 += () => { EventText(DialogType.PowerUpChat2); };
+        CatFollowerRandomAnswer.onPowerup3 += () => { EventText(DialogType.PowerUpChat3); };
+    }
+
+    void UnsubscribeToEvents()
+        {
+            CatFollowersSystem.onNewFollowers -= IncreasingFanbaseInteraction;
+            CatFollowersSystem.onNewFollowers -= () => { EventText(DialogType.NewFollower); };
+            CatFollowersSystem.onFollowersHelp -= () => { EventText(DialogType.HelpFulAdvice); };
+            CatFollowerRandomAnswer.onWrongAdvice -= () =>  { EventText(DialogType.Trolling); };
+            CatFollowerRandomAnswer.onInsult -= () => { EventText(DialogType.Discouragement); };
+            CatFollowerRandomAnswer.onPowerup1 -= () =>  { EventText(DialogType.PowerUpChat1); };
+            CatFollowerRandomAnswer.onPowerup2 -= () =>  { EventText(DialogType.PowerUpChat2); };
+            CatFollowerRandomAnswer.onPowerup3 -= () =>  { EventText(DialogType.PowerUpChat3); };
+        }
+
+        void OnDisable()
+        {
+            UnsubscribeToEvents();
+        }
+    }
+

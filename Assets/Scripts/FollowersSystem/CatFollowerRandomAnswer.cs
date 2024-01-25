@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -12,8 +10,12 @@ public class CatFollowerRandomAnswer : MonoBehaviour
     public static Action[] randomFollowerOutcome;
     public static Action onHelpfulAdvice;
     public static Action onWrongAdvice;
+    public static Action onEncouragement;
     public static Action onFollowerGift;
     public static Action onInsult;
+    public static Action onPowerup1;
+    public static Action onPowerup2;
+    public static Action onPowerup3;
 
     [Header("How many options are available at game start")]
     [SerializeField] 
@@ -37,6 +39,7 @@ public class CatFollowerRandomAnswer : MonoBehaviour
             onHelpfulAdvice,
             onWrongAdvice,
             onHelpfulAdvice,
+            onEncouragement,
             onFollowerGift
 
         };
@@ -58,7 +61,7 @@ public class CatFollowerRandomAnswer : MonoBehaviour
     }
 
 
-    void increaseEventPosibilities()
+    void IncreaseEventPosibilities()
     {
         if (allowedOutcomes >= randomFollowerOutcome.Length)
         {
@@ -116,13 +119,13 @@ public class CatFollowerRandomAnswer : MonoBehaviour
 
     void SubscribeToEvents()
     {
-        CatFollowersSystem.onNewFollowers += increaseEventPosibilities;
+        CatFollowersSystem.onNewFollowers += IncreaseEventPosibilities;
         CatFollowersSystem.onFollowersRequest += GetAnswerFromFollowers;
     }
 
     void UnSubscribeToEvents()
     {
-        CatFollowersSystem.onNewFollowers -= increaseEventPosibilities;
+        CatFollowersSystem.onNewFollowers -= IncreaseEventPosibilities;
         CatFollowersSystem.onFollowersRequest -= GetAnswerFromFollowers;
     }
 
