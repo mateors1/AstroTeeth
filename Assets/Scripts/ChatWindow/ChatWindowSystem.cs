@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -20,6 +20,10 @@ public class ChatWindowSystem : MonoBehaviour
     [Tooltip("Truncates how fast can the chat go")]
     float minTimeBetweenTexts;
 
+    [SerializeField]
+    [Tooltip("Indicates the maximum of chats given from an specific event")]
+    int maxResponsesPerEvent;
+    
     [SerializeField]
     int responsesOnEvent;
 
@@ -93,7 +97,14 @@ public class ChatWindowSystem : MonoBehaviour
 
     void EventText(DialogType eventResponse)
     {
-        chatbox.text = FormattedUserDialog(DynamicDialogSystem.instance.GetChatString(DialogType.Encouragement));
+        
+        int responsesForEvent = Random.Range(1, maxResponsesPerEvent);
+        while (responsesForEvent > 0)
+        {
+            chatbox.text = FormattedUserDialog(DynamicDialogSystem.instance.GetChatString(eventResponse));
+            responsesForEvent--;
+        }
+       
     }
 
 
