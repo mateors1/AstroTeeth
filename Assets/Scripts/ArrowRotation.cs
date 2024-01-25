@@ -1,6 +1,5 @@
 
 using System.Collections;
-using System.Diagnostics;
 using UnityEngine;
 using DG.Tweening;
 using Debug = UnityEngine.Debug;
@@ -94,5 +93,9 @@ public class ArrowRotation : MonoBehaviour
         }
         yield return null;
     }
-    
+
+   void  OnDisable()
+    {
+        Debug.Log("YaVali");
+    }
 }

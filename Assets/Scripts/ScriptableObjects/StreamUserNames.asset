@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c96b3b996ffacae469bbe161c14b69ac, type: 3}
   m_Name: StreamUserNames
   m_EditorClassIdentifier: 
-  usernames: []
+  usernames:
+  - shrek
+  - burro
+  - fiona

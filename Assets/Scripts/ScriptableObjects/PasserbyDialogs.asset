@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe680444b68edd4f8fc1e6fae91d436, type: 3}
   m_Name: PasserbyDialogs
   m_EditorClassIdentifier: 
-  dialogs: []
+  dialogs:
+  - Me parecio ver un lindo gatito
+  - ese gato tiene mas carisma que paquita la del barrio
