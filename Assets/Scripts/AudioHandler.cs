@@ -67,5 +67,6 @@ public class AudioHandler : MonoBehaviour
     void OnDisable()
     {
         CatFollowersSystem.onDisconnect -= IDied;
+        gameController.Player.Jump.performed -= ctx => JumpSFX();
     }
 }

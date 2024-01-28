@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -33,11 +34,15 @@ public class GameOverSystem : MonoBehaviour
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("obstacle");
         foreach (GameObject obstacle in obstacles)
         {
-            if (obstacle.tag != "Player")
-            {
+            
                 obstacle.gameObject.SetActive(false);
-            }
+            
             
         }
+    }
+
+    void OnDestroy()
+    {
+        CatFollowersSystem.onDisconnect -= GameOver;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -11,8 +12,8 @@ public class SpawnsManager : MonoBehaviour
 
     public int followersValue;
 
-    public float spawnMoveSpeed;
-    public float spawnAcceleration;
+    public float spawnMoveSpeed= 6f;
+    public float spawnAcceleration =0.1f;
 
 
     [SerializeField]
@@ -26,16 +27,18 @@ public class SpawnsManager : MonoBehaviour
     
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        Debug.Log("something");
-        CatFollowersSystem.onNewFollowers += IncreaseSpeeds;
+        
     }
 
     void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+            Debug.Log("instance loaded");
+        }
+        Debug.Log("something");
+        CatFollowersSystem.onNewFollowers += IncreaseSpeeds;
         StartCoroutine(SpawnProps(spawnSpeed));
     }
 
@@ -53,7 +56,8 @@ public class SpawnsManager : MonoBehaviour
             int index = Random.Range(0, props.Length);
 
             // Instantiate the prefab
-            Instantiate(props[index], spawnLocation, props[index].transform.rotation);
+           Instantiate(props[index], spawnLocation, props[index].transform.rotation);
+          
         }
 
         // Continue spawning
@@ -75,6 +79,9 @@ public class SpawnsManager : MonoBehaviour
         
         
     }
-    
-    
+
+    void OnDestroy()
+    {
+        CatFollowersSystem.onNewFollowers -= IncreaseSpeeds;
+    }
 }

@@ -133,7 +133,7 @@ public class ChatWindowSystem : MonoBehaviour
             CatFollowerRandomAnswer.onPowerup3 -= () =>  { EventText(DialogType.PowerUpChat3); };
         }
 
-        void OnDisable()
+        void OnDestroy()
         {
             UnsubscribeToEvents();
         }

@@ -51,10 +51,7 @@ public class CatFollowerRandomAnswer : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+
         
         SubscribeToEvents();
         
@@ -130,7 +127,7 @@ public class CatFollowerRandomAnswer : MonoBehaviour
         CatFollowersSystem.onFollowersRequest -= GetAnswerFromFollowers;
     }
 
-    void OnDisable()
+    void OnDestroy()
     {
         UnSubscribeToEvents();
     }

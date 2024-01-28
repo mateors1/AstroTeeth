@@ -20,10 +20,7 @@ public class CatFollowersSystem : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+
     }
 
 

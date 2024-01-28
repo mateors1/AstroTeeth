@@ -31,14 +31,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Time.timeScale = 1;
         if (instance == null)
         {
             instance = this;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        
 
         
 

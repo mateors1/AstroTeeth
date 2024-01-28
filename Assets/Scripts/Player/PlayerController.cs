@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         gameController.Disable();
+        
+        gameController.Player.Move.performed -= ctx => HandleMovement(ctx.ReadValue<Vector2>());
+        gameController.Player.Jump.performed -= ctx => HandleJump();
+        gameController.Player.Move.performed -= ctx => HandleFlying(ctx.ReadValue<Vector2>());
     }
 
     private void Start()
@@ -100,7 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         if (transform.position.y > ceiling)
         {
-            transform.position = new Vector3(0, ceiling, 0);
+            transform.position = new Vector3(transform.position.x, ceiling, 0);
         }
     }
 
