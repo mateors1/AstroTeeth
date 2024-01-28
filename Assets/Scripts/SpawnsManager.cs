@@ -7,13 +7,13 @@ public class SpawnsManager : MonoBehaviour
 {
     public static SpawnsManager instance;
 
-    public float spawnSpeed;
+    public float spawnSpeed, minSpawnrate;
     public float incrementSpeed;
 
     public int followersValue;
 
-    public float spawnMoveSpeed= 6f;
-    public float spawnAcceleration =0.1f;
+    public float spawnMoveSpeed;
+    public float spawnAcceleration ;
 
 
     [SerializeField]
@@ -68,7 +68,11 @@ public class SpawnsManager : MonoBehaviour
 
     void IncreaseSpeeds()
     {
-        spawnSpeed += incrementSpeed;
+        if(spawnSpeed > minSpawnrate)
+        {
+            spawnSpeed -= incrementSpeed;
+        }
+        
         spawnMoveSpeed += spawnAcceleration;
     }
    

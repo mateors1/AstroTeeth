@@ -184,7 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8201a4caa578fe946b3b5dff521051f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatBubble: {fileID: 0}
   transformOffset: 1.5
   timeOnScreen: 3
-  newFollowersValue: 20
+  newFollowersValue: 50

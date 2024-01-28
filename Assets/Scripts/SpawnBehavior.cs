@@ -10,8 +10,7 @@ public class SpawnBehavior : MonoBehaviour
             //SpawnsManager.instance.spawnMoveSpeed += 6;
         }
         SpawnsManager.instance.MoveLeft(transform);
-        Debug.Log($"ImMoving at {SpawnsManager.instance.spawnMoveSpeed}");
-       // MoveLeft();
+        
         
     }
 
@@ -22,8 +21,5 @@ public class SpawnBehavior : MonoBehaviour
         GameManager.instance.followers += SpawnsManager.instance.followersValue;
     }
 
-    void MoveLeft()
-    {
-        transform.Translate(Vector3.left * Time.deltaTime, Space.World);
-    }
+
 }

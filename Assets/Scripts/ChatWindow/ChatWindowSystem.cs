@@ -62,7 +62,7 @@ public class ChatWindowSystem : MonoBehaviour
     string FormattedUserDialog(string dialog)
     {
         return
-            $"<color=#{UserColor()}>{usernames.usernames[Random.Range(0, usernames.usernames.Length)]}</color>: {dialog} \n {chatbox.text}";
+            $"<color=#{UserColor()}>{usernames.usernames[Random.Range(0, usernames.usernames.Length)]}</color>: \n {dialog} \n {chatbox.text}";
     }
 
     string UserColor()
