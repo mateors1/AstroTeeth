@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe680444b68edd4f8fc1e6fae91d436, type: 3}
   m_Name: NewFollowerChats
   m_EditorClassIdentifier: 
-  dialogs: []
+  dialogs:
+  - Omg where the F is this beaver
+  - I thought This was going to be a cat stream

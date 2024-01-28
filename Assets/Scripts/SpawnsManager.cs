@@ -30,7 +30,7 @@ public class SpawnsManager : MonoBehaviour
         {
             instance = this;
         }
-        
+        Debug.Log("something");
         CatFollowersSystem.onNewFollowers += IncreaseSpeeds;
     }
 
@@ -72,5 +72,9 @@ public class SpawnsManager : MonoBehaviour
     public void MoveLeft(Transform movingobject)
     {
         movingobject.Translate(Vector3.left * spawnMoveSpeed * Time.deltaTime, Space.World);
+        
+        
     }
+    
+    
 }

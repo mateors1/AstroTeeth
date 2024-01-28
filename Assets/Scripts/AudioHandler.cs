@@ -32,13 +32,19 @@ public class AudioHandler : MonoBehaviour
         CatFollowersSystem.onDisconnect += IDied;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
+        gameController.Enable();
         
     }
 
-    void JumpSFX()
+    // Start is called before the first frame update
+    void Start()
+    {
+        sfxPlayer = GetComponent<AudioSource>();
+    }
+
+    public void JumpSFX()
     {
         if (jump != null)
         {
@@ -53,11 +59,7 @@ public class AudioHandler : MonoBehaviour
     // Update is called once per frame
     void IDied()
     {
-        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
-        foreach (AudioSource source in allAudioSources)
-        {
-            //source.gameObject.SetActive(false);
-        }
+        sfxPlayer.PlayOneShot(ded);
     }
 
     void OnDisable()

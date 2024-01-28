@@ -1,16 +1,19 @@
 using UnityEngine;
+using System.Linq;
 
 public class CollisionwithObjects : MonoBehaviour
 {
     [SerializeField]
-    string tag;
+    string[] obstacleTags;
     // Start is called before the first frame update
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag(tag))
+        if (obstacleTags.Contains(other.gameObject.tag.ToLower()))
         {
             CatFollowersSystem.onDisconnect?.Invoke();
         }
         
     }
+
+ 
 }

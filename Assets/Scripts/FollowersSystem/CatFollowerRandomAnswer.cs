@@ -58,7 +58,7 @@ public class CatFollowerRandomAnswer : MonoBehaviour
         
         SubscribeToEvents();
         
-        DontDestroyOnLoad(gameObject);
+       
     }
 
 

@@ -9,6 +9,10 @@ TagManager:
   - Ground
   - obstacle
   - tag
+  - Planet
+  - Space
+  - Random
+  - duck
   layers:
   - Default
   - TransparentFX
@@ -45,4 +49,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Planet
+    uniqueID: 3196520285
+    locked: 0
+  - name: Props
+    uniqueID: 1621945499
+    locked: 0
+  - name: UI
+    uniqueID: 4272041719
     locked: 0

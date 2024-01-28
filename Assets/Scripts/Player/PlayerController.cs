@@ -1,12 +1,13 @@
+
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float jumpSpeed = 2f;
-    public int maxJumps = 2;  // Maximum number of jumps (including the initial jump)
+    public int maxJumps = 3;  // Maximum number of jumps (including the initial jump)
     public bool canFly = false;
 
     private int jumpsRemaining;
@@ -15,8 +16,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private GameControllerActions gameController;
 
+    [SerializeField]
+    float ceiling = 6.8f;
     private void Awake()
     {
+        CatFollowersSystem.onDisconnect += IDied;
         gameController = new GameControllerActions();
         gameController.Player.Move.performed += ctx => HandleMovement(ctx.ReadValue<Vector2>());
         gameController.Player.Jump.performed += ctx => HandleJump();
@@ -41,8 +45,13 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement(Vector2 movement)
     {
-        transform.Translate(movement * moveSpeed * Time.deltaTime);
+        // Clamp the X-axis movement between -9.95 and 8
+        float clampedX = Mathf.Clamp(transform.position.x + movement.x * moveSpeed * Time.deltaTime, -9.95f, 8f);
+    
+        // Set the new position with clamped X-axis
+        transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
     }
+
 
     private void HandleJump()
     {
@@ -85,5 +94,18 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    void Update()
+    {
+        if (transform.position.y > ceiling)
+        {
+            transform.position = new Vector3(0, ceiling, 0);
+        }
+    }
+
+    void IDied()
+    {
+        gameController.Disable();
     }
 }
