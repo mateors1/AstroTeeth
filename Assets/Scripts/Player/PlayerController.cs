@@ -6,8 +6,10 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float jumpSpeed = 2f;
+    public int maxJumps = 2;  // Maximum number of jumps (including the initial jump)
     public bool canFly = false;
 
+    private int jumpsRemaining;
     private bool isGrounded = false;
     private bool isFlying = false;
     private Rigidbody2D rb;
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        jumpsRemaining = maxJumps;
     }
 
     private void HandleMovement(Vector2 movement)
@@ -43,10 +46,17 @@ public class PlayerController : MonoBehaviour
 
     private void HandleJump()
     {
-        if (isGrounded)
+        if (jumpsRemaining > 0)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce * jumpSpeed);
             CatFollowerRandomAnswer.onEncouragement?.Invoke();
+            jumpsRemaining--;
+
+            // If the player can double jump, reset isGrounded to allow double jump even if not on the ground
+            if (canFly)
+            {
+                isGrounded = false;
+            }
         }
     }
 
@@ -65,6 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = true;
             isFlying = false;
+            jumpsRemaining = maxJumps;  // Reset jumps when touching the ground
         }
     }
 

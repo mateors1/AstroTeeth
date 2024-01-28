@@ -56,7 +56,7 @@ public class AudioHandler : MonoBehaviour
         AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
         foreach (AudioSource source in allAudioSources)
         {
-            source.gameObject.SetActive(false);
+            //source.gameObject.SetActive(false);
         }
     }
 

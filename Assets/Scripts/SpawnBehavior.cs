@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class SpawnBehavior : MonoBehaviour
@@ -12,6 +11,7 @@ public class SpawnBehavior : MonoBehaviour
     // Update is called once per frame
     void OnDestroy()
     {
+        
         GameManager.instance.followers += SpawnsManager.instance.followersValue;
     }
 }

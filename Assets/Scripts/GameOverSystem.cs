@@ -12,7 +12,7 @@ public class GameOverSystem : MonoBehaviour
 
     void GameOver()
     {
-        Time.timeScale = 0;
+        
         RemoveObjectsFromScene();
         floor.SetActive(false);
         StartCoroutine(ShowGameOverScreen());
@@ -23,6 +23,7 @@ public class GameOverSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         gameOverMenu.gameObject.SetActive(true);
+        
         Time.timeScale = 0;
 
     }
@@ -32,7 +33,11 @@ public class GameOverSystem : MonoBehaviour
         GameObject[] obstacles = GameObject.FindGameObjectsWithTag("obstacle");
         foreach (GameObject obstacle in obstacles)
         {
-            obstacle.gameObject.SetActive(false);
+            if (obstacle.tag != "Player")
+            {
+                obstacle.gameObject.SetActive(false);
+            }
+            
         }
     }
 }
