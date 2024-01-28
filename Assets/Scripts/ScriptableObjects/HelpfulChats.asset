@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe680444b68edd4f8fc1e6fae91d436, type: 3}
   m_Name: HelpfulChats
   m_EditorClassIdentifier: 
-  dialogs: []
+  dialogs:
+  - Beware!
+  - Plantes Cant harm you... can they?

@@ -59,7 +59,9 @@ public class AudioHandler : MonoBehaviour
     // Update is called once per frame
     void IDied()
     {
+        gameController.Disable();
         sfxPlayer.PlayOneShot(ded);
+        
     }
 
     void OnDisable()
